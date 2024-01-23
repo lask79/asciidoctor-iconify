@@ -1,0 +1,5 @@
+name: iconify
+title: Iconify Example
+version: ~
+nav:
+  - modules/ROOT/nav.adoc

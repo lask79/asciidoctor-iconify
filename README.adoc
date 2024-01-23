@@ -1,0 +1,143 @@
+= asciidoctor-iconify
+:url-repo: https://github.com/lask79/asciidoctor-iconify
+:url-antora-docs: https://docs.antora.org/antora/3.1
+:toc: macro
+:toc-title: Contents
+:sectnums:
+:imagesdir: docs/modules/ROOT/images
+:iconify-url: https://iconify.design/
+:iconify-icons-url: https://icon-sets.iconify.design/
+
+image::https://img.shields.io/npm/v/asciidoctor-iconify.svg[NPM version]
+
+toc::[]
+
+`asciidoctor-iconify` is an extension for `asciidoctor.js` and `Antora` provides an inline macro that inserts an icon into the document based on {iconify-url}[Iconify].
+The icon is rendered as an inline image. It uses the the iconify web component where javascript is used to dynamically replace the icon with an SVG image.
+
+By using this macro you get access to > 200.000 icons from > 100 icon collections.
+
+== Features
+
+* Based on the awesome icon provider {iconify-url}[Iconify]
+* Inline macro to insert icons: `iconify:cil:locomotive[]`
+* Provides access to more than 200.000 icons from more than 100 icon collections: https://icon-sets.iconify.design/
+* Supports `Antora` and `Asciidoctor.js`
+* Renders the icon using the iconify https://iconify.design/docs/iconify-icon/[web component]
+
+== Installation
+
+```
+npm i asciidoctor-iconify
+```
+
+== Register extension
+
+=== Asciidoctor
+
+.Asciidoctor
+[source, javascript]
+----
+const asciidoctor = require('@asciidoctor/core')()
+const asciidoctorIconify = require('asciidoctor-iconify')
+const registry = asciidoctor.Extensions.create()
+asciidoctorIconify.register(registry)
+----
+
+NOTE: The needed javascript file is added via `DocInfoProcessor`.
+
+=== Antora
+
+==== Antora Playbook
+[source, yaml]
+----
+antora:
+  extensions:
+    - require: "asciidoctor-iconify"
+----
+
+WARNING: Do not add the asciidoctor-iconify to the asciidoc.extensions. It will not work because then the needed javascript will not be added to the site.
+
+==== Add handlebars template
+
+You have to change 1 file in your Antora UI bundle or by overwriting it via supplemental-ui:
+
+* add `{{> iconify-scripts }}` to `partials/footer-scripts.hbs`
+
+If you do not want to change your UI bundle or when you use the default ui bundle you can simply put the following lines into `supplemental-ui/partials/head-styles.hbs` next to your `antora playbook`:
+
+.footer-scripts.hbs
+[source,html]
+----
+<script id="site-script" src="{{{uiRootPath}}}/js/site.js" data-ui-root-path="{{{uiRootPath}}}"></script>
+<script src="{{uiRootPath}}/js/vendor/lunr.js"></script>
+<script src="{{uiRootPath}}/js/vendor/search.js" id="search-script" data-base-path="{{or siteRootPath (or site.url siteRootUrl)}}" data-page-path="{{@root.page.url}}"></script>
+<script async src="{{uiRootPath}}/../search-index.js"></script>
+# ...
+
+{{> iconify-scripts }}
+----
+
+`{{> iconify-scripts }}` will be replaced with the content of the file `iconify-scripts.hbs` that provided by this extension.
+
+.iconify-scripts.hbs
+[source,html]
+----
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@1.0.8/dist/iconify-icon.min.js"></script>
+----
+
+=== VSCode
+
+[source,javascript]
+----
+// add this to .asciidoctor/lib/asciidoctor-iconify.js when you have turned on the extension
+module.exports = require('asciidoctor-iconfiy')
+----
+
+== Details
+
+=== Anatomy
+
+The icon macro is an inline macro. Like other inline macros, its syntax follows the familiar pattern of the macro name and target separated by a colon followed by an attribute list enclosed in square brackets.
+
+ iconify:<target>[<attrlist>]
+
+The `<target>` is the icon name or path. The `<attrlist>` specifies various named attributes to configure how the icon is displayed.
+
+For example:
+
+ iconify:cil:locomotive[]
+
+In this case it says that the icon is from the `cil` collection and the icon name is `locomotive`.
+
+You can find all collections and icons at https://iconify.design/icon-sets/
+
+=== Attributes
+
+size::
+  The size attribute is used to specify the size of the icon. The value is a number followed by a unit. The default is 1em.
+  You can select also: 1x, 2x, 3x, 4x, 5x, <number>px, <number>em
+
+role::
+  The role attribute is used to specify the color of the icon. The value is the name of the color. The default is defined by the icon itself.
+
+title::
+  The title of the image displayed when the mouse hovers over it.
+
+flip::
+  The flip attribute is used to specify the flip of the icon. The value is horizontal or vertical. The default is none.
+
+rotate::
+  The rotate attribute is used to specify the rotation of the icon. The value is 90, 180 or 270. The default is none.
+
+link::
+  The URI target used for the icon, which will wrap the converted icon in a link.
+
+window::
+  The target window of the link (when the link attribute is specified).
+
+
+=== Examples
+
+image:iconify-examples-1.png[]
+image:iconify-examples-2.png[]

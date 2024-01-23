@@ -1,0 +1,120 @@
+= Iconify Example
+:icons: font
+
+== Description
+
+The iconify macro is used to insert an icon into the document.
+The icon is rendered as an inline image.
+It uses the the iconify https://iconify.design/docs/iconify-icon/[web component] where javascript is used to dynamically replace the icon with an SVG image.
+
+By using this macro you get access to > 200.000 icons from > 100 icon collections.
+
+== Anatomy
+
+The icon macro is an inline macro. Like other inline macros, its syntax follows the familiar pattern of the macro name and target separated by a colon followed by an attribute list enclosed in square brackets.
+
+ iconify:<target>[<attrlist>]
+
+The `<target>` is the icon name or path. The `<attrlist>` specifies various named attributes to configure how the icon is displayed.
+
+For example:
+
+ iconify:cil:locomotive[]
+
+In this case it says that the icon is from the `cil` collection and the icon name is `locomotive`.
+
+You can find all collections and icons at https://iconify.design/icon-sets/
+
+== Attributes
+
+size::
+  The size attribute is used to specify the size of the icon. The value is a number followed by a unit. The default is 1em.
+  You can select also: 1x, 2x, 3x, 4x, 5x, <number>px, <number>em
+
+role::
+  The role attribute is used to specify the color of the icon. The value is the name of the color. The default is defined by the icon itself.
+
+title::
+  The title of the image displayed when the mouse hovers over it.
+
+flip::
+  The flip attribute is used to specify the flip of the icon. The value is horizontal or vertical. The default is none.
+
+rotate::
+  The rotate attribute is used to specify the rotation of the icon. The value is 90, 180 or 270. The default is none.
+
+link::
+  The URI target used for the icon, which will wrap the converted icon in a link.
+
+window::
+  The target window of the link (when the link attribute is specified).
+
+== Examples
+
+[%header, cols="1,4a,2a"]
+|===
+|Type |Source |Result
+
+|default
+|
+ iconify:cil:locomotive[]
+|iconify:cil:locomotive[]
+
+|role
+|
+ iconify:cil:locomotive[role=red]
+|iconify:cil:locomotive[role=red]
+
+|size
+|
+ iconify:cil:locomotive[1x]
+ iconify:cil:locomotive[2x]
+ iconify:cil:locomotive[3x]
+ iconify:cil:locomotive[4x]
+ iconify:cil:locomotive[5x]
+ iconify:cil:locomotive[30px]
+|
+[%hardbreaks]
+iconify:cil:locomotive[1x]
+iconify:cil:locomotive[2x]
+iconify:cil:locomotive[3x]
+iconify:cil:locomotive[4x]
+iconify:cil:locomotive[5x]
+iconify:cil:locomotive[30px]
+iconify:cil:locomotive[size=50px]
+
+|flip
+|
+ iconify:cil:locomotive[5x,flip=horizontal]
+ iconify:cil:locomotive[5x,flip=vertical]
+|
+[%hardbreaks]
+iconify:cil:locomotive[5x,flip=horizontal]
+iconify:cil:locomotive[5x,flip=vertical]
+
+|rotate
+|
+ iconify:cil:locomotive[5x,rotate=90]
+ iconify:cil:locomotive[5x,rotate=180]
+ iconify:cil:locomotive[5x,rotate=270]
+|
+[%hardbreaks]
+iconify:cil:locomotive[5x,rotate=90]
+iconify:cil:locomotive[5x,rotate=180]
+iconify:cil:locomotive[5x,rotate=270]
+
+|link & window
+|
+ iconify:cil:locomotive[link=https://www.google.com, window="_self"]
+ iconify:cil:locomotive[link=https://www.google.com, window="_blank"]
+|
+[%hardbreaks]
+iconify:cil:locomotive[link=https://www.google.com, window="_self"]
+iconify:cil:locomotive[link=https://www.google.com, window="_blank"]
+
+|title
+|
+ iconify:cil:locomotive[3x,title=Show me text on hover]
+|
+iconify:cil:locomotive[3x,title=Show me text on hover]
+|===
